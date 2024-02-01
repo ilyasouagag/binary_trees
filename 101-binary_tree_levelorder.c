@@ -1,7 +1,7 @@
 #include "binary_trees.h"
 
 size_t binary_tree_height(const binary_tree_t *tree);
-void print_generation(const binary_tree_t *tree, int generation, void (*func)(int));
+void print_generation(const binary_tree_t *tree, int gen, void (*func)(int));
 /**
  * binary_tree_height - measures the height of binary tree
  * @tree: pointer to the root node
@@ -32,17 +32,17 @@ size_t binary_tree_height(const binary_tree_t *tree)
  * @generation: level of the tree
  * @func: pointer to a  node
  */
-void print_generation(const binary_tree_t *tree, int generation, void (*func)(int))
+void print_generation(const binary_tree_t *tree, int gen, void (*func)(int))
 {
 	if (!tree)
 		return;
 
-	if (generation == 1)
+	if (gen == 1)
 		func(tree->n);
-	else if (generation > 1)
+	else if (gen > 1)
 	{
-		print_generation(tree->left, generation - 1, func);
-		print_generation(tree->right, generation - 1, func);
+		print_generation(tree->left, gen - 1, func);
+		print_generation(tree->right, gen - 1, func);
 	}
 }
 
