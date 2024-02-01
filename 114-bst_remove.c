@@ -2,7 +2,7 @@
 bst_t *minimum_finder(bst_t *tree);
 /**
  * minimum_finder - Finds the minimum root
- * @root: pointer to the tree
+ * @tree: pointer to the tree
  * Return: the min number
  */
 bst_t *minimum_finder(bst_t *tree)
@@ -53,7 +53,7 @@ bst_t *bst_remove(bst_t *root, int value)
 		}
 		else
 		{
-			temp = min_finder(root->right);
+			temp = minimum_finder(root->right);
 			root->n = temp->n;
 			root->right = bst_remove(root->right, temp->n);
 		}
