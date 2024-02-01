@@ -1,4 +1,6 @@
 #include "binary_trees.h"
+size_t binary_tree_size(const binary_tree_t *tree);
+int is_complete(binary_tree_t *tree, int index, int size);
 
 /**
  * binary_tree_size - measures the size of binary tree
