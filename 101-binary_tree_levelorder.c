@@ -29,7 +29,7 @@ size_t binary_tree_height(const binary_tree_t *tree)
 /**
  * print_generation - print all element in the current level
  * @tree: pointer to thse
- * @generation: level of the tree
+ * @gen: level of the tree
  * @func: pointer to a  node
  */
 void print_generation(const binary_tree_t *tree, int gen, void (*func)(int))
