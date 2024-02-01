@@ -1,82 +1,42 @@
 #include "binary_trees.h"
 
-int heap_extract(heap_t **root);
-void recurse_extract(heap_t *tree);
-heap_t *max(heap_t *tree);
 /**
- * heap_extract - Extracts the root node of a Max Binary Heap.
- * @root: A double pointer to the root node of heap.
- * Return: The value stored in the root node.
+ * heap_extract - extracts the root node of a Max Binary Heap
+ * @root: double pointer to the root node of the heap
+ * Return: value stored in the root node, or 0 on failure
  */
+
 int heap_extract(heap_t **root)
 {
 	int value;
+	heap_t *node;
 
-	if (!*root)
+	if (root == NULL || *root == NULL)
 		return (0);
 	value = (*root)->n;
-	if (!(*root)->left)
+	node = *root;
+	while (node->left != NULL || node->right != NULL)
 	{
-		value = (*root)->n;
-		free(*root);
-		*root = NULL;
-		return (value);
-	}
-	recurse_extract(*root);
-	return (value);
-}
-
-/**
- * recurse_extract - Recursively extracts the max from the tree.
- * @tree: The pointer to the root of the tree.
- */
-void recurse_extract(heap_t *tree)
-{
-	heap_t *sub_max, *right_max = NULL;
-
-	if (!tree->left)
-		return;
-	sub_max = max((tree)->left);
-	if (tree->right)
-		right_max = max(tree->right);
-	if (right_max && right_max->n > sub_max->n)
-		sub_max = right_max;
-	tree->n = sub_max->n;
-	if (!sub_max->left)
-	{
-		if (sub_max->parent && sub_max->parent->left == sub_max)
-			sub_max->parent->left = NULL;
-		if (sub_max->parent && sub_max->parent->right == sub_max)
-			sub_max->parent->right = NULL;
-		free(sub_max);
-	}
-	else
-		recurse_extract(sub_max);
-}
-
-/**
- * max - Finds the maximum node in a tree.
- * @tree: The pointer to the root of the tree.
- * Return: The node with the maximum value.
- */
-heap_t *max(heap_t *tree)
-{
-	heap_t *curr_max, *left_max, *right_max;
-
-	if (!tree->left)
-		return (tree);
-	left_max = max(tree->left);
-	if (left_max->n > tree->n)
-		curr_max = left_max;
-	else
-		curr_max = tree;
-	if (tree->right)
-	{
-		right_max = max(tree->right);
-		if (right_max->n > curr_max->n)
-			curr_max = right_max;
+		if (node->right == NULL || node->left->n > node->right->n)
+		{
+			node->n = node->left->n;
+			node = node->left;
+		}
 		else
-			curr_max = tree;
+		{
+			node->n = node->right->n;
+			node = node->right;
+		}
 	}
-	return (curr_max);
+	if (node->parent != NULL)
+	{
+		if (node->parent->left == node)
+			node->parent->left = NULL;
+		else
+			node->parent->right = NULL;
+	}
+	else
+		*root = NULL;
+	free(node);
+	return (value);
 }
